@@ -1,0 +1,32 @@
+# 开发环境配置 - 使用 SQLite 数据库
+
+database:
+  type: sqlite
+  sqlite:
+    path: ./data/drone.db
+
+spring:
+  datasource:
+    # SQLite 数据库初始化配置
+    # initialization-mode: always 表示每次启动都执行初始化脚本
+    # embedded 表示仅对嵌入式数据库执行初始化
+    # never 表示不执行初始化
+    initialization-mode: never
+    continue-on-error: false
+    platform: sqlite
+
+mybatis:
+  mapper-locations: classpath:mapper/sqlite/*.xml
+  type-aliases-package: com.example.drone.domain.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  file:
+    name: logs/drone-management-system-dev.log
+    max-size: 10MB
+    max-history: 30
+  level:
+    com.example.drone: DEBUG
+    org.apache.ibatis: DEBUG
